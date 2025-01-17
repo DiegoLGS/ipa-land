@@ -1,2 +1,5 @@
 <app-navbar />
-<router-outlet />
+
+<div [@slideInAnimation]="getRouteAnimationData()">
+    <router-outlet />
+</div>

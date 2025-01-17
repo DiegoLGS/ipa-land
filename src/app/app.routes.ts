@@ -9,6 +9,7 @@ export const routes: Routes = [
         import('./components/home/home.component').then(
           (m) => m.HomeComponent
         ),
+        data: { animation: 'home' },
     },
     {
       path: 'menu',
@@ -16,6 +17,7 @@ export const routes: Routes = [
         import('./components/menu/menu.component').then(
           (m) => m.MenuComponent
         ),
+        data: { animation: 'menu' },
     },
     {
       path: 'local',
@@ -23,5 +25,6 @@ export const routes: Routes = [
         import('./components/local/local.component').then(
           (m) => m.LocalComponent
         ),
+        data: { animation: 'local' },
     },
 ];
