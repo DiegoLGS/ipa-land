@@ -1,7 +1,7 @@
-<main class="bg-black flex justify-center items-center flex-wrap lg:flex-col bg-[url('images/burguers_table.jpg')] bg-cover bg-center bg-fixed py-20">
+<main class="bg-black min-h-screen flex justify-center items-center flex-wrap lg:flex-col bg-[url('images/burguers_table.jpg')] bg-cover bg-center bg-fixed py-20 overflow-hidden">
     <div class="fixed inset-0 bg-black/50"></div>
 
-    <div *ngIf="!beers.length" class="z-10 flex justify-center items-center h-screen">
+    <div *ngIf="!beers.length" class="z-10 flex justify-center items-center absolute">
         <img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" alt="Cargando..." class="w-1/2">
     </div>
 
