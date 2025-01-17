@@ -1,27 +1,13 @@
 import { Component } from '@angular/core';
+import { ScheduleComponent } from "../schedule/schedule.component";
+import { CarouselComponent } from "../carousel/carousel.component";
 
 @Component({
   selector: 'app-local',
-  imports: [],
   templateUrl: './local.component.html',
-  styleUrl: './local.component.css'
+  styleUrls: ['./local.component.css'],
+  imports: [ScheduleComponent, CarouselComponent]
 })
 export class LocalComponent {
   
-  ngOnInit(): void {
-
-    const carousel: HTMLElement = document.getElementById("carousel")!;
-    const slides: HTMLCollection = carousel?.children;
-    let index: number = 0;
-
-    if(slides) {
-      setInterval (() => {        
-        index = (index < slides.length - 1) ? index + 1 : 0;
-        carousel.style.transform = `translateX(-${index * 100}%)`;
-        
-      }, 2000);
-      
-    }
-  }
-
 }

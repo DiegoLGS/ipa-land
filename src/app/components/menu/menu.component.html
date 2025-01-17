@@ -1,12 +1,16 @@
-<main class="h-screen bg-black flex justify-center items-center flex-col bg-[url('images/burguers_table.jpg')] bg-cover bg-center bg-fixed">
+<main class="bg-black flex justify-center items-center flex-wrap lg:flex-col bg-[url('images/burguers_table.jpg')] bg-cover bg-center bg-fixed py-20">
     <div class="fixed inset-0 bg-black/50"></div>
 
-    <div class="mt-20 z-10" *ngFor="let beer of beers">
+    <div *ngIf="!beers.length" class="z-10 flex justify-center items-center h-screen">
+        <img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" alt="Cargando..." class="w-1/2">
+    </div>
+
+    <div class="z-10 min-w-80 w-1/2 lg:w-full" *ngFor="let beer of beers">
         
-        <div class="px-2 py-20 w-1/2 lg:w-screen flex justify-center">
+        <div class="px-2 py-20 flex justify-center">
             <div class="bg-transparent lg:mx-8 lg:flex lg:shadow-lg rounded-lg w-3/4">
                 <div class="lg:w-1/2">
-                    <div class="scale-110 h-80 bg-cover lg:h-full rounded-lg border"
+                    <div class="scale-110 h-80 bg-cover bg-center lg:h-full rounded-lg border"
                     [style.backgroundImage]="'url(' + beer.image + ')'">
                     </div>
                 </div>
@@ -14,7 +18,7 @@
                     <h2 class="text-3xl text-gray-300 font-bold">
                         {{beer.name}}
                     </h2>
-                    <div class="mt-4 text-xl text-gray-200">
+                    <div class="mt-4 text-l lg:text-xl text-gray-200">
                         <p>Tipo: {{beer.type}}</p>
                         <p>Alcohol: {{beer.alcohol}} %</p>
                         <p>IBU: {{beer.ibu}}</p>
