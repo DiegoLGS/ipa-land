@@ -10,9 +10,10 @@ import { ApiRequestService } from '../../services/api-request.service';
   styleUrl: './menu.component.css'
 })
 export class MenuComponent {
+  apiRequestService: ApiRequestService = inject(ApiRequestService);
   beers: Beer[] = [];
 
-  constructor(private apiRequestService: ApiRequestService) { }
+  constructor() { }
 
   ngOnInit(): void {
     const listOfBeers = this.apiRequestService.getBeers();

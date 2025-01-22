@@ -7,10 +7,18 @@ import { Beer } from '../classes/beer';
   providedIn: 'root'
 })
 export class ApiRequestService {
+  private baseUrl = 'https://ipaland-api.onrender.com';
 
-  constructor(private http: HttpClient ) { }
+  constructor(private http: HttpClient) {}
 
   getBeers(): Observable<Beer[]> {
-    return this.http.get<Beer[]>("https://ipaland-api.onrender.com/beers");
+    return this.http.get<Beer[]>(`${this.baseUrl}/beers`);
+  }
+
+  login(username: string, password: string): Observable<{ success: boolean; message?: string }> {
+    return this.http.post<{ success: boolean; message?: string }>(`${this.baseUrl}/users`, {
+      username,
+      password,
+    });
   }
 }

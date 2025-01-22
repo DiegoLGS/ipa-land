@@ -28,6 +28,14 @@ export const routes: Routes = [
         data: { animation: 'local' },
     },
     {
+      path: 'login',
+      loadComponent: () =>
+        import('./components/login/login.component').then(
+          (m) => m.LoginComponent
+        ),
+        data: { animation: 'login' },
+    },
+    {
       path: '**',
       loadComponent: () =>
         import('./components/page-not-found/page-not-found.component').then(
