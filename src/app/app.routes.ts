@@ -27,4 +27,12 @@ export const routes: Routes = [
         ),
         data: { animation: 'local' },
     },
+    {
+      path: '**',
+      loadComponent: () =>
+        import('./components/page-not-found/page-not-found.component').then(
+          (m) => m.PageNotFoundComponent
+        ),
+      data: { animation: 'page-not-found' },
+    },
 ];
