@@ -15,6 +15,15 @@ export class ApiRequestService {
     return this.http.get<Beer[]>(`${this.baseUrl}/beers`);
   }
 
+  createBeer(beer: Beer, securityWord: string) {
+    const url = `${this.baseUrl}/beers`;
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${securityWord}`,
+    });
+
+    return this.http.post(url, beer,{ headers });
+  }
+
   deleteBeer(id: string, securityWord: string) {
     const url = `${this.baseUrl}/beers/${id}`;
     const headers = new HttpHeaders({

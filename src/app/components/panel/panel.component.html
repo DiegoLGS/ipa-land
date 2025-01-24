@@ -34,7 +34,7 @@
                                 <td class="p-2 md:p-4">{{beer.alcohol }}%</td>
                                 <td class="p-2 md:p-4">{{beer.ibu}}</td>
                                 <td class="relative p-2 md:p-4 flex justify-center space-x-2">
-                                    <button class="bg-blue-500 hover:bg-blue-400 text-white px-3 py-1 rounded-md text-xs md:text-sm" (click)="this.editId = beer._id">Editar</button>
+                                    <button class="bg-blue-500 hover:bg-blue-400 text-white px-3 py-1 rounded-md text-xs md:text-sm" (click)="this.beerToEdit = beer">Editar</button>
                                     <button class="bg-red-500 hover:bg-red-400 text-white px-3 py-1 rounded-md text-xs md:text-sm" (click)="openDeleteModal(beer)">Borrar</button>
                                 </td>
                             </tr>                   
@@ -42,7 +42,7 @@
                         </tbody>
                     </table>
                 </div>
-                <button class="text-xl text-white bg-green-600 hover:bg-green-500 px-3 py-1 rounded-md absolute bottom-0 right-20" (click)="this.editId = ''">Agregar nueva cerveza</button>
+                <button class="text-xl text-white bg-green-600 hover:bg-green-500 px-3 py-1 rounded-md absolute bottom-0 right-20" (click)="this.beerToEdit = null">Agregar nueva cerveza</button>
             </div>
         }
 
@@ -67,5 +67,5 @@
             </div>
         }
 
-        <app-beer-form [editId]="editId" />
+        <app-beer-form [beerToEdit]="beerToEdit" [securityWord]="this.securityWord" />
 </div>

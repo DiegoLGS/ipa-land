@@ -12,7 +12,7 @@ import { BeerFormComponent } from "../beer-form/beer-form.component";
 export class PanelComponent {
   apiRequestService: ApiRequestService = inject(ApiRequestService);
   beers: Beer[] = [];
-  editId: string = '';
+  beerToEdit: Beer | null = null;
   securityWord: string = '';
 
   isModalOpen: boolean = false;
@@ -62,7 +62,6 @@ export class PanelComponent {
   }
 
   setSecurityWord(securityWord: string) {
-    console.log(securityWord);
     this.securityWord = securityWord;
   }
 }

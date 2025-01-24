@@ -1,5 +1,5 @@
 <div class="bg-white border rounded-lg px-8 py-6 mx-auto my-8 max-w-2xl">
-    @if(editId) {
+    @if(beerToEdit) {
         <h2 class="text-2xl font-medium mb-4">Editar producto</h2>
         
     } @else {
@@ -7,7 +7,7 @@
         
     }
     
-    <form [formGroup]="formGroup" (ngSubmit)="editId ? editBeer() : createBeer()" > 
+    <form [formGroup]="formGroup" (ngSubmit)="beerToEdit ? editBeer(beerToEdit) : createBeer()" > 
 
         <div class="mb-4">
             <label for="name" class="block text-gray-700 font-medium mb-2">Nombre</label>
@@ -20,7 +20,10 @@
         <div class="mb-4">
             <label for="type" class="block text-gray-700 font-medium mb-2">Tipo</label>
             <select id="type" name="type"
-                class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required>
+                class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
+                #inputType
+                (change)="setTypeValue(inputType.value)"
+                required>
                 <option value="">Selecciona el tipo</option>
                 @for(type of beerTypes; track type) {
                     <option [value]="type">{{ type }}</option>
@@ -59,8 +62,18 @@
                 formControlName="description"
                 ></textarea>
         </div>
+
+        <p class="text-red-600">{{ errorMessage }}</p>
+
         <div>
-            <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">{{ editId ? 'Editar cerveza' : 'Crear cerveza'}}</button>
+            <button type="submit" class="w-full text-white px-4 py-2 rounded-lg"
+            [disabled]="!securityWord"
+            [class.bg-gray-500]="!securityWord"
+            [class.bg-blue-500]="securityWord"
+            [class.hover:bg-blue-600]="securityWord"
+            >
+            {{ beerToEdit ? 'Editar cerveza' : 'Crear cerveza' }}                
+            </button>
         </div>
 
     </form>
