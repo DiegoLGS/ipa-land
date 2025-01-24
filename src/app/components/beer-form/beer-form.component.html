@@ -1,1 +1,67 @@
-<p>beer-form works!</p>
+<div class="bg-white border rounded-lg px-8 py-6 mx-auto my-8 max-w-2xl">
+    @if(editId) {
+        <h2 class="text-2xl font-medium mb-4">Editar producto</h2>
+        
+    } @else {
+        <h2 class="text-2xl font-medium mb-4">Nuevo producto</h2>
+        
+    }
+    
+    <form [formGroup]="formGroup" (ngSubmit)="editId ? editBeer() : createBeer()" > 
+
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700 font-medium mb-2">Nombre</label>
+            <input type="text" id="name" name="name"
+                class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required
+                formControlName="name"
+            >
+        </div>
+
+        <div class="mb-4">
+            <label for="type" class="block text-gray-700 font-medium mb-2">Tipo</label>
+            <select id="type" name="type"
+                class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required>
+                <option value="">Selecciona el tipo</option>
+                @for(type of beerTypes; track type) {
+                    <option [value]="type">{{ type }}</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="alcohol" class="block text-gray-700 font-medium mb-2">Alcohol</label>
+            <input type="text" id="alcohol" name="alcohol"
+                class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required
+                formControlName="alcohol"
+            >
+        </div>
+
+        <div class="mb-4">
+            <label for="ibu" class="block text-gray-700 font-medium mb-2">IBU</label>
+            <input type="text" id="ibu" name="ibu"
+                class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required
+                formControlName="ibu"
+            >
+        </div>  
+
+        <div class="mb-4">
+            <label for="image" class="block text-gray-700 font-medium mb-2">URL de Imagen</label>
+            <input type="text" id="image" name="image"
+                class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required
+                formControlName="image"
+            >
+        </div>  
+
+        <div class="mb-4">
+            <label for="description" class="block text-gray-700 font-medium mb-2">Descripción</label>
+            <textarea id="description" name="description"
+                class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" rows="5"
+                formControlName="description"
+                ></textarea>
+        </div>
+        <div>
+            <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">{{ editId ? 'Editar cerveza' : 'Crear cerveza'}}</button>
+        </div>
+
+    </form>
+</div>

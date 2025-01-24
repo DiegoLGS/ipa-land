@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Beer } from '../classes/beer';
@@ -13,6 +13,15 @@ export class ApiRequestService {
 
   getBeers(): Observable<Beer[]> {
     return this.http.get<Beer[]>(`${this.baseUrl}/beers`);
+  }
+
+  deleteBeer(id: string, securityWord: string) {
+    const url = `${this.baseUrl}/beers/${id}`;
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${securityWord}`,
+    });
+
+    return this.http.delete(url, { headers });
   }
 
   login(username: string, password: string): Observable<{ success: boolean; message?: string }> {
