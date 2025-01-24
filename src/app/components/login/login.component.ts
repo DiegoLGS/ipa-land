@@ -15,6 +15,7 @@ export class LoginComponent {
   apiRequestService: ApiRequestService = inject(ApiRequestService);
   authService: AuthService = inject(AuthService);
   fb = inject(FormBuilder)
+  isLoading: boolean = false;
 
   formGroup: FormGroup;
     errorMessage: string = "";
@@ -32,18 +33,21 @@ export class LoginComponent {
       return;
     }
 
+    this.isLoading = true;
     const { username, password } = this.formGroup.value;
-    this.errorMessage = '';
-
+    
     this.apiRequestService.login(username, password).subscribe((response: { success: boolean; message?: string }) => {
+      this.isLoading = false;
+      
       if(response.success) {
+        this.errorMessage = '';
         this.authService.logUser();
-
         this.router.navigate(['/panel']); 
           
       } else {
         this.errorMessage = response.message || 'Error de autenticación';
       }
+
     })
   }
 

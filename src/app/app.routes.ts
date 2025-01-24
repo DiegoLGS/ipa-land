@@ -36,6 +36,14 @@ export const routes: Routes = [
         data: { animation: 'login' },
     },
     {
+      path: 'panel',
+      loadComponent: () =>
+        import('./components/panel/panel.component').then(
+          (m) => m.PanelComponent
+        ),
+        data: { animation: 'panel' },
+    },
+    {
       path: '**',
       loadComponent: () =>
         import('./components/page-not-found/page-not-found.component').then(
