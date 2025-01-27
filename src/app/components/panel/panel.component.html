@@ -4,7 +4,7 @@
     <p class="font-semibold">Clave de seguridad</p>
     <input type="password" placeholder="Ingresa la clave de seguridad" class="my-1 block w-96 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" #securityWord (keyup)="setSecurityWord(securityWord.value)">    
 
-    <app-beer-table (beerToEdit)="beerToEdit = $event" />
+    <app-beer-table (beerToEdit)="beerToEdit = $event" [securityWord]="this.securityWord" />
         
 
     <app-beer-form [beerToEdit]="beerToEdit" [securityWord]="this.securityWord" />
