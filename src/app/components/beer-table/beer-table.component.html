@@ -44,6 +44,5 @@
     [isOpen]="isModalOpen"
     [title]="modalTitle"
     [message]="modalMessage"
-    (confirm)="onConfirm()"
-    (cancel)="onCancel()">
+    (confirm)="onConfirm($event)">
 </app-modal>

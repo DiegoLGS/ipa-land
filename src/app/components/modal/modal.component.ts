@@ -10,14 +10,9 @@ export class ModalComponent {
   @Input() isOpen: boolean = false;
   @Input() message: string = '';
 
-  @Output() confirm = new EventEmitter<void>();
-  @Output() cancel = new EventEmitter<void>();
+  @Output() confirm = new EventEmitter<boolean>();
 
-  closeModal() {
-    this.cancel.emit();
-  }
-
-  confirmAction() {
-    this.confirm.emit();
+  confirmAction(confirmation: boolean) {
+    this.confirm.emit(confirmation);
   }
 }

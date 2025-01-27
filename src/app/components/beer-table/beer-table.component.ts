@@ -52,12 +52,11 @@ export class BeerTableComponent {
     this.beerToDelete = beer;
   }
 
-  onConfirm() {
-    this.deleteItem(); 
-    this.isModalOpen = false;
-  }
+  onConfirm(confirmation: boolean) {
+    if(confirmation) {
+      this.deleteItem(); 
+    }
 
-  onCancel() {
     this.isModalOpen = false;
-  }  
+  } 
 }
