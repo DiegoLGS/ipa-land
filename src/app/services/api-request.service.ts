@@ -22,7 +22,16 @@ export class ApiRequestService {
     });
 
     return this.http.post(url, beer,{ headers });
-  }
+  }  
+
+  editBeer(beer: Beer, securityWord: string) {
+    const url = `${this.baseUrl}/beers/${beer._id}`;
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${securityWord}`,
+    });
+
+    return this.http.put(url, beer,{ headers });
+  }  
 
   deleteBeer(id: string, securityWord: string) {
     const url = `${this.baseUrl}/beers/${id}`;

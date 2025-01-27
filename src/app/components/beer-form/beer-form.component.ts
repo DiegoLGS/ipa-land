@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BeerType } from '../../enums/beer-type';
 import { Beer } from '../../classes/beer';
@@ -30,7 +30,21 @@ export class BeerFormComponent {
       image: ["", [Validators.required]],
       description: ["", []],
     })
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['beerToEdit'] && this.beerToEdit) {
+      this.formGroup.patchValue({
+        name: this.beerToEdit.name,
+        type: this.beerToEdit.type,
+        alcohol: this.beerToEdit.alcohol,
+        ibu: this.beerToEdit.ibu,
+        image: this.beerToEdit.image,
+        description: this.beerToEdit.description,
+      });
+    } else {
+      this.formGroup.reset();
+    }
   }
 
   setTypeValue(type: string) {
@@ -39,7 +53,7 @@ export class BeerFormComponent {
 
   takeFormValues(): Beer {
     const { name, type, alcohol, ibu, image, description } = this.formGroup.value;
-    const beer: Beer = new Beer('', name, type, alcohol, ibu, image, description);
+    const beer: Beer = new Beer(name, type, alcohol, ibu, image, description);
 
     return beer;
   }
@@ -54,17 +68,35 @@ export class BeerFormComponent {
 
     this.apiRequestService.createBeer(beer, this.securityWord).subscribe({
       next: () => {
-        console.log('Cerveza creada exitosamente');    
-        
+        this.errorMessage = '';
+        console.log('Cerveza creada exitosamente');            
       },
       error: (err) => {
-        console.error('Error al crear la cerveza:', err.error);
+        console.log(this.formGroup.value)
+        console.error('Error al crear la cerveza:', err);
       },
     });
   }  
 
-  editBeer(beer: Beer) {
+  editBeer(beer: Beer) {        
+    if (this.formGroup.invalid) {
+      this.errorMessage = this.getErrorMessage();
+      return;
+    }
 
+    const editedBeer: Beer = this.takeFormValues();        
+
+    editedBeer._id = beer._id;
+
+    this.apiRequestService.editBeer(editedBeer, this.securityWord).subscribe({
+      next: () => {
+        this.errorMessage = '';
+        console.log('Cerveza editada exitosamente');    
+      },
+      error: (err) => {
+        console.error('Error al editar la cerveza:', err.error);
+      },
+    });
   }
 
   getErrorMessage(): string {

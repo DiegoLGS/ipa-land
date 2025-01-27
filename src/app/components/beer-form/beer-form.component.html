@@ -14,6 +14,7 @@
             <input type="text" id="name" name="name"
                 class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required
                 formControlName="name"
+                [value]="beerToEdit ? beerToEdit.name : ''"                
             >
         </div>
 
@@ -23,7 +24,9 @@
                 class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
                 #inputType
                 (change)="setTypeValue(inputType.value)"
-                required>
+                required
+                [value]="beerToEdit ? beerToEdit.type : ''"
+                >
                 <option value="">Selecciona el tipo</option>
                 @for(type of beerTypes; track type) {
                     <option [value]="type">{{ type }}</option>
@@ -36,6 +39,7 @@
             <input type="text" id="alcohol" name="alcohol"
                 class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required
                 formControlName="alcohol"
+                [value]="beerToEdit ? beerToEdit.alcohol : ''"
             >
         </div>
 
@@ -44,6 +48,7 @@
             <input type="text" id="ibu" name="ibu"
                 class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required
                 formControlName="ibu"
+                [value]="beerToEdit ? beerToEdit.ibu : ''"
             >
         </div>  
 
@@ -52,6 +57,7 @@
             <input type="text" id="image" name="image"
                 class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required
                 formControlName="image"
+                [value]="beerToEdit ? beerToEdit.image : ''"
             >
         </div>  
 
@@ -60,6 +66,7 @@
             <textarea id="description" name="description"
                 class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" rows="5"
                 formControlName="description"
+                [value]="beerToEdit ? beerToEdit.description : ''"
                 ></textarea>
         </div>
 

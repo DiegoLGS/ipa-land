@@ -46,19 +46,20 @@ export class PanelComponent {
     }
   }
 
-  deleteItem(beerToDelete: Beer) {
-    console.log("Item a eliminar: ", beerToDelete._id)
-    this.apiRequestService.deleteBeer(beerToDelete._id, this.securityWord)
-    .subscribe({
-      next: () => {
-        console.log('Cerveza eliminada exitosamente');
-        
-        this.beers = this.beers.filter(beer => beer._id !== beerToDelete._id);
+  deleteItem(beerToDelete: Beer) {    
+    if(beerToDelete._id) {
+      this.apiRequestService.deleteBeer(beerToDelete._id, this.securityWord)
+      .subscribe({
+        next: () => {
+          console.log('Cerveza eliminada exitosamente');
+          
+          this.beers = this.beers.filter(beer => beer._id !== beerToDelete._id);
       },
       error: (err) => {
         console.error('Error al eliminar la cerveza:', err.error);
       },
     });
+  }
   }
 
   setSecurityWord(securityWord: string) {
