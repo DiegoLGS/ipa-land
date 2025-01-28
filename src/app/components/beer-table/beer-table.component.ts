@@ -15,6 +15,7 @@ export class BeerTableComponent {
 
   apiRequestService: ApiRequestService = inject(ApiRequestService);
   beers: Beer[] = [];
+  filteredBeers: Beer[] = [];
 
   isModalOpen: boolean = false;
   beerToDelete: Beer | null = null;
@@ -26,6 +27,7 @@ export class BeerTableComponent {
 
     listOfBeers.subscribe((data: Beer[]) => {
       this.beers = data;
+      this.filteredBeers = data;
       console.log(this.beers)
     })
   }
@@ -59,4 +61,16 @@ export class BeerTableComponent {
 
     this.isModalOpen = false;
   } 
+
+  filterBeers(filter: string) {
+    filter = filter.trim();
+
+    if(filter !== '') {
+      filter = filter.toLowerCase();
+      this.filteredBeers = this.beers.filter(beer => beer.name.toLowerCase().includes(filter) || beer.type.toLowerCase().includes(filter))
+      
+    } else {
+      this.filteredBeers = this.beers;
+    }
+  }
 }

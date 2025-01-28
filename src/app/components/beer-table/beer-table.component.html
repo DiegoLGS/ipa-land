@@ -1,4 +1,6 @@
 @if(beers.length) {
+    <p class="font-semibold">Filtrar por Nombre o Tipo</p>
+    <input type="text" class="my-1 block w-96 p-2 border border-gray-300 focus:outline-none focus:border-blue-400 rounded-md shadow-sm" #securityWord (keyup)="filterBeers(securityWord.value)" placeholder="Ingrese el filtro deseado">
 
     <div class="relative overflow-auto">
         <div class="overflow-x-auto rounded-lg">
@@ -22,7 +24,7 @@
                 </thead>
                 <tbody>
                     
-                    @for(beer of beers; track beer._id) {
+                    @for(beer of filteredBeers; track beer._id) {
                         <tr class="border-b text-xs md:text-sm text-center text-gray-800">
                             <td class="p-2 md:p-4">{{beer.name}}</td>
                             <td class="p-2 md:p-4">{{beer.type}}</td>
