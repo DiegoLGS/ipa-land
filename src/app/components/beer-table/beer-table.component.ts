@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@angular/core';
 import { Beer } from '../../classes/beer';
 import { ApiRequestService } from '../../services/api-request.service';
 import { ModalComponent } from "../modal/modal.component";
@@ -12,6 +12,7 @@ import { ModalComponent } from "../modal/modal.component";
 export class BeerTableComponent {
   @Output() beerToEdit = new EventEmitter<Beer | null>();
   @Input() securityWord: string = '';
+  @Output() refreshBeers = new EventEmitter<void>();
 
   apiRequestService: ApiRequestService = inject(ApiRequestService);
   beers: Beer[] = [];
@@ -19,20 +20,20 @@ export class BeerTableComponent {
 
   isModalOpen: boolean = false;
   beerToDelete: Beer | null = null;
-  modalTitle: string = '';
   modalMessage: string = '';
 
   ngOnInit(): void {
-    const listOfBeers = this.apiRequestService.getBeers();
+    this.getAllBeers();
+  }
 
-    listOfBeers.subscribe((data: Beer[]) => {
+  getAllBeers() {
+    this.apiRequestService.getBeers().subscribe((data: Beer[]) => {
       this.beers = data;
       this.filteredBeers = data;
-      console.log(this.beers)
     })
   }
 
-  deleteItem() {    
+  deleteBeer(): void {    
     if(this.beerToDelete && this.beerToDelete._id) {
       this.apiRequestService.deleteBeer(this.beerToDelete._id, this.securityWord)
       .subscribe({
@@ -48,21 +49,21 @@ export class BeerTableComponent {
     }
   }
 
-  openDeleteModal(beer: Beer) {
+  openDeleteModal(beer: Beer): void {
     this.modalMessage = `Esto borrará el item : ${beer.name}` ;
     this.isModalOpen = true;
     this.beerToDelete = beer;
   }
 
-  onConfirm(confirmation: boolean) {
+  onConfirm(confirmation: boolean): void {
     if(confirmation) {
-      this.deleteItem(); 
+      this.deleteBeer(); 
     }
 
     this.isModalOpen = false;
   } 
 
-  filterBeers(filter: string) {
+  filterBeers(filter: string): void {
     filter = filter.trim();
 
     if(filter !== '') {

@@ -1,18 +1,20 @@
-import { Component, inject, Input, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BeerType } from '../../enums/beer-type';
 import { Beer } from '../../classes/beer';
 import { ApiRequestService } from '../../services/api-request.service';
+import { ModalComponent } from "../modal/modal.component";
 
 @Component({
   selector: 'app-beer-form',
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule, ModalComponent],
   templateUrl: './beer-form.component.html',
   styleUrl: './beer-form.component.css'
 })
 export class BeerFormComponent {
   @Input() beerToEdit: Beer | null = null;
   @Input() securityWord: string = '';
+  @Output() beerUpdated = new EventEmitter<void>();
 
   apiRequestService: ApiRequestService = inject(ApiRequestService);
 
@@ -20,6 +22,9 @@ export class BeerFormComponent {
   fb: FormBuilder = inject(FormBuilder)
   beerTypes = Object.values(BeerType);
   errorMessage: string = "";
+
+  isModalOpen: boolean = false;
+  modalMessage: string = '';
 
   constructor() {
     this.formGroup = this.fb.group({
@@ -78,7 +83,7 @@ export class BeerFormComponent {
     });
   }  
 
-  editBeer(beer: Beer) {        
+  editBeer() {        
     if (this.formGroup.invalid) {
       this.errorMessage = this.getErrorMessage();
       return;
@@ -86,17 +91,31 @@ export class BeerFormComponent {
 
     const editedBeer: Beer = this.takeFormValues();        
 
-    editedBeer._id = beer._id;
+    editedBeer._id = this.beerToEdit!._id;
 
     this.apiRequestService.editBeer(editedBeer, this.securityWord).subscribe({
       next: () => {
         this.errorMessage = '';
+        this.beerUpdated.emit();
         console.log('Cerveza editada exitosamente');    
       },
       error: (err) => {
         console.error('Error al editar la cerveza:', err.error);
       },
     });
+  }
+
+  openEditModal(): void {
+    this.modalMessage = `Esto editará el item : ${this.beerToEdit!.name}` ;
+    this.isModalOpen = true;;
+  }
+
+  onConfirm(confirmation: boolean): void {
+    if(confirmation) {
+      this.editBeer(); 
+    }
+
+    this.isModalOpen = false;
   }
 
   getErrorMessage(): string {
