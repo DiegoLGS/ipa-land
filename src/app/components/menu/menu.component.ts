@@ -1,11 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { Beer } from '../../classes/beer';
-import { NgFor, NgIf } from '@angular/common';
 import { ApiRequestService } from '../../services/api-request.service';
 
 @Component({
   selector: 'app-menu',
-  imports: [NgFor, NgIf],
+  imports: [],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })

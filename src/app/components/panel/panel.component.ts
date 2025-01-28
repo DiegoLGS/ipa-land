@@ -1,7 +1,8 @@
-import { Component, Input, input, ViewChild } from '@angular/core';
+import { Component, inject, Input, input, ViewChild } from '@angular/core';
 import { Beer } from '../../classes/beer';
 import { BeerFormComponent } from "../beer-form/beer-form.component";
 import { BeerTableComponent } from "../beer-table/beer-table.component";
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-panel',
@@ -12,10 +13,10 @@ import { BeerTableComponent } from "../beer-table/beer-table.component";
 export class PanelComponent {  
   @ViewChild(BeerTableComponent) beerTable!: BeerTableComponent;
 
+  authService: AuthService = inject(AuthService);
   beerToEdit: Beer | null = null;
-
   securityWord: string = '';
-  
+    
   setSecurityWord(securityWord: string) {
     this.securityWord = securityWord;
   }

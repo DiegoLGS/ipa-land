@@ -74,6 +74,7 @@ export class BeerFormComponent {
     this.apiRequestService.createBeer(beer, this.securityWord).subscribe({
       next: () => {
         this.errorMessage = '';
+        this.beerUpdated.emit();
         console.log('Cerveza creada exitosamente');            
       },
       error: (err) => {

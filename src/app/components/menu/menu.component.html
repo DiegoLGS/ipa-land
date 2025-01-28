@@ -1,32 +1,37 @@
 <main class="bg-black min-h-screen flex justify-center items-center flex-wrap lg:flex-col bg-cover bg-center bg-fixed py-20 overflow-hidden" style="background-image: url('assets/images/burguers_table.jpg');">
     <div class="fixed inset-0 bg-black/50"></div>
 
-    <div *ngIf="!beers.length" class="z-10 flex justify-center items-center absolute">
-        <img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" alt="Cargando..." class="w-1/2">
-    </div>
+    @if(!beers.length) {
+        <div class="z-10 flex justify-center items-center absolute">
+            <img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" alt="Cargando..." class="w-1/2">
+        </div>
+    }
 
-    <div class="z-10 min-w-80 w-1/2 lg:w-full" *ngFor="let beer of beers">
-        
-        <div class="px-2 py-20 flex justify-center">
-            <div class="bg-transparent lg:mx-8 lg:flex lg:shadow-lg rounded-lg w-3/4">
-                <div class="lg:w-1/2">
-                    <div class="scale-110 h-80 bg-cover bg-center lg:h-full rounded-lg border"
-                    [style.backgroundImage]="'url(' + beer.image + ')'">
+    @for (beer of beers; track beer._id) {
+        <div class="z-10 min-w-80 w-1/2 lg:w-full">
+            
+            <div class="px-2 py-20 flex justify-center">
+                <div class="bg-transparent lg:mx-8 lg:flex lg:shadow-lg rounded-lg w-3/4">
+                    <div class="lg:w-1/2">
+                        <div class="scale-110 h-80 bg-cover bg-center lg:h-full rounded-lg border"
+                        [style.backgroundImage]="'url(' + beer.image + ')'">
+                        </div>
                     </div>
-                </div>
-                <div class="h-96 py-12 px-6 lg:px-12 lg:w-1/2 rounded-b-lg border lg:rounded-lg bg-slate-600/50">
-                    <h2 class="text-3xl text-gray-300 font-bold">
-                        {{beer.name}}
-                    </h2>
-                    <div class="mt-4 text-l lg:text-xl text-gray-200">
-                        <p>Tipo: {{beer.type}}</p>
-                        <p>Alcohol: {{beer.alcohol}} %</p>
-                        <p>IBU: {{beer.ibu}}</p>
-                        <p>{{beer.description}}</p>
-                    </div>                    
+                    <div class="h-96 py-12 px-6 lg:px-12 lg:w-1/2 rounded-b-lg border lg:rounded-lg bg-slate-600/50">
+                        <h2 class="text-3xl text-gray-300 font-bold">
+                            {{beer.name}}
+                        </h2>
+                        <div class="mt-4 text-l lg:text-xl text-gray-200">
+                            <p>Tipo: {{beer.type}}</p>
+                            <p>Alcohol: {{beer.alcohol}} %</p>
+                            <p>IBU: {{beer.ibu}}</p>
+                            <p>{{beer.description}}</p>
+                        </div>                    
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
+
 
 </main>

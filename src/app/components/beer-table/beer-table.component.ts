@@ -38,6 +38,7 @@ export class BeerTableComponent {
       this.apiRequestService.deleteBeer(this.beerToDelete._id, this.securityWord)
       .subscribe({
         next: () => {
+          this.getAllBeers();
           console.log('Cerveza eliminada exitosamente');
           
           this.beers = this.beers.filter(beer => beer._id !== this.beerToDelete!._id);
