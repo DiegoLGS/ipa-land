@@ -1,6 +1,6 @@
 @if(beers.length) {
     <p class="font-semibold">Filtrar por Nombre o Tipo</p>
-    <input type="text" class="my-1 block w-96 p-2 border border-gray-300 focus:outline-none focus:border-blue-400 rounded-md shadow-sm" #securityWord (keyup)="filterBeers(securityWord.value)" placeholder="Ingrese el filtro deseado">
+    <input type="text" class="my-1 block w-80 lg:w-96 p-2 mb-4 border border-gray-300 focus:outline-none focus:border-blue-400 rounded-md shadow-sm" #securityWord (keyup)="filterBeers(securityWord.value)" placeholder="Ingrese el filtro deseado">
 
     <div class="relative overflow-auto">
         <div class="overflow-x-auto rounded-lg">
@@ -8,31 +8,31 @@
                 <thead>
                     <tr class="bg-cyan-600 text-center text-xs md:text-sm font-thin text-white">
                         <th class="p-0">
-                            <span class="block py-2 px-3 border-r border-gray-300">Nombre</span>
+                            <span class="block py-2 px-2 md:px-3 border-r border-gray-300">Nombre</span>
                         </th>
                         <th class="p-0">
-                            <span class="block py-2 px-3 border-r border-gray-300">Tipo</span>
+                            <span class="block py-2 px-2 md:px-3 border-r border-gray-300">Tipo</span>
                         </th>
                         <th class="p-0">
-                            <span class="block py-2 px-3 border-r border-gray-300">Alcohol</span>
+                            <span class="block py-2 px-2 md:px-3 border-r border-gray-300">Alcohol</span>
                         </th>
                         <th class="p-0">
-                            <span class="block py-2 px-3 border-r border-gray-300">IBU</span>
+                            <span class="block py-2 px-2 md:px-3 border-r border-gray-300">IBU</span>
                         </th>
                         <th class="p-4 text-xs md:text-sm">Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="bg-slate-700 text-white">
                     
                     @for(beer of filteredBeers; track beer._id) {
-                        <tr class="border-b text-xs md:text-sm text-center text-gray-800">
+                        <tr class="border-b text-xs md:text-sm text-center">
                             <td class="p-2 md:p-4">{{beer.name}}</td>
                             <td class="p-2 md:p-4">{{beer.type}}</td>
                             <td class="p-2 md:p-4">{{beer.alcohol }}%</td>
                             <td class="p-2 md:p-4">{{beer.ibu}}</td>
                             <td class="relative p-2 md:p-4 flex justify-center space-x-2">
-                                <button class="bg-blue-500 hover:bg-blue-400 text-white px-3 py-1 rounded-md text-xs md:text-sm" (click)="this.beerToEdit.emit(beer)">Editar</button>
-                                <button class="bg-red-500 hover:bg-red-400 text-white px-3 py-1 rounded-md text-xs md:text-sm" (click)="openDeleteModal(beer)">Borrar</button>
+                                <button class="bg-blue-500 hover:bg-blue-400 text-white px-1 md:px-3 py-1 rounded-md text-xs md:text-sm" (click)="this.beerToEdit.emit(beer)">Editar</button>
+                                <button class="bg-red-500 hover:bg-red-400 text-white px-1 md:px-3 py-1 rounded-md text-xs md:text-sm" (click)="openDeleteModal(beer)">Borrar</button>
                             </td>
                         </tr>                   
                     } 
@@ -40,6 +40,10 @@
                 </table>
             </div>
             <button class="text-xl text-white bg-green-600 hover:bg-green-500 px-3 py-1 rounded-md absolute bottom-0 right-20" (click)="this.beerToEdit.emit(null)">Agregar nueva cerveza</button>
+    </div>
+} @else {
+    <div class="z-10 flex justify-center items-center absolute w-full">
+        <img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" alt="Cargando..." class="w-1/12">
     </div>
 }
 <app-modal
