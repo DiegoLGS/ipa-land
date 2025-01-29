@@ -14,7 +14,9 @@
                 <div class="bg-transparent lg:mx-8 lg:flex lg:shadow-lg rounded-lg w-3/4">
                     <div class="lg:w-1/2">
                         <div class="scale-110 h-80 bg-cover bg-center lg:h-full rounded-lg border"
-                        [style.backgroundImage]="'url(' + beer.image + ')'">
+                        [style.backgroundImage]="'url(' + beer.image + ')'"
+                        role="img" [ariaLabel]="'Imagen de la cerveza {{ beer.name }} de tipo {{ beer.type }}'"
+                        >
                         </div>
                     </div>
                     <div class="h-96 py-12 px-6 lg:px-12 lg:w-1/2 rounded-b-lg border lg:rounded-lg bg-slate-600/50">

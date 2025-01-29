@@ -22,6 +22,7 @@ export class BeerFormComponent {
   fb: FormBuilder = inject(FormBuilder)
   beerTypes = Object.values(BeerType);
   errorMessage: string = "";
+  successMessage: string = "";
 
   isModalOpen: boolean = false;
   modalMessage: string = '';
@@ -74,6 +75,10 @@ export class BeerFormComponent {
     this.apiRequestService.createBeer(beer, this.securityWord).subscribe({
       next: () => {
         this.errorMessage = '';
+        this.successMessage = 'Cerveza creada con éxito';
+        setTimeout(() => {
+          this.successMessage = '';
+        }, 3000);
         this.beerUpdated.emit();
         console.log('Cerveza creada exitosamente');            
       },
@@ -97,6 +102,10 @@ export class BeerFormComponent {
     this.apiRequestService.editBeer(editedBeer, this.securityWord).subscribe({
       next: () => {
         this.errorMessage = '';
+        this.successMessage = 'Cerveza editada con éxito';
+        setTimeout(() => {
+          this.successMessage = '';
+        }, 3000);
         this.beerUpdated.emit();
         console.log('Cerveza editada exitosamente');    
       },
@@ -157,4 +166,8 @@ export class BeerFormComponent {
     return '';
   }  
 
+  formReset(): void {
+    this.formGroup.reset();    
+    this.beerToEdit = null;
+  }
 }
