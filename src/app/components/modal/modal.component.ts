@@ -9,6 +9,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ModalComponent {
   @Input() isOpen: boolean = false;
   @Input() message: string = '';
+  @Input() isNotification: boolean = false;
 
   @Output() confirm = new EventEmitter<boolean>();
 

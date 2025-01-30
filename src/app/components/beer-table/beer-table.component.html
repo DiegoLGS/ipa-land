@@ -2,8 +2,8 @@
     <p class="font-semibold">Filtrar por Nombre o Tipo</p>
     <input type="text" class="my-1 block w-80 lg:w-96 p-2 mb-4 border border-gray-300 focus:outline-none focus:border-blue-400 rounded-md shadow-sm" #securityWord (keyup)="filterBeers(securityWord.value)" placeholder="Ingrese el filtro deseado">
 
-    <div class="relative overflow-auto">
-        <div class="overflow-x-auto rounded-lg">
+    <div class="relative">
+        <div class="rounded-lg">
             <table class="min-w-full bg-white border mb-20">
                 <thead>
                     <tr class="bg-cyan-600 text-center text-xs md:text-sm font-thin text-white">
@@ -37,9 +37,9 @@
                         </tr>                   
                     } 
                     </tbody>
-                </table>
-            </div>
-            <button class="text-xl text-white bg-green-600 hover:bg-green-500 px-3 py-1 rounded-md absolute bottom-0 right-20" (click)="this.beerToEdit.emit(null)">Agregar nueva cerveza</button>
+            </table>
+        </div>
+        <button class="text-xl text-white bg-green-600 hover:bg-green-500 px-3 py-1 rounded-md absolute -bottom-14 right-6" (click)="this.beerToEdit.emit(null)">Agregar nueva cerveza</button>
     </div>
 } @else {
     <div class="z-10 flex justify-center items-center absolute w-full">
@@ -49,5 +49,6 @@
 <app-modal
     [isOpen]="isModalOpen"
     [message]="modalMessage"
-    (confirm)="onConfirm($event)">
-</app-modal>
+    (confirm)="onConfirm($event)"
+    [isNotification]="isNotification"
+/>

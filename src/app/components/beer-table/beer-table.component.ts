@@ -21,6 +21,7 @@ export class BeerTableComponent {
   isModalOpen: boolean = false;
   beerToDelete: Beer | null = null;
   modalMessage: string = '';
+  isNotification: boolean = false;
 
   ngOnInit(): void {
     this.getAllBeers();
@@ -45,9 +46,16 @@ export class BeerTableComponent {
       },
       error: (err) => {
         console.error('Error al eliminar la cerveza:', err.error);
+        this.openNotificationModal(err.error.error);
       },
       });
     }
+  }
+
+  openNotificationModal(error: string): void {
+    this.modalMessage = `Ocurrió el siguiente error : ${error}` ;
+    this.isNotification = true;    
+    this.isModalOpen = true;
   }
 
   openDeleteModal(beer: Beer): void {
@@ -62,6 +70,7 @@ export class BeerTableComponent {
     }
 
     this.isModalOpen = false;
+    this.isNotification = false;
   } 
 
   filterBeers(filter: string): void {

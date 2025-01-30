@@ -22,10 +22,10 @@ export class BeerFormComponent {
   fb: FormBuilder = inject(FormBuilder)
   beerTypes = Object.values(BeerType);
   errorMessage: string = "";
-  successMessage: string = "";
 
   isModalOpen: boolean = false;
   modalMessage: string = '';
+  isNotification: boolean = false;
 
   constructor() {
     this.formGroup = this.fb.group({
@@ -75,16 +75,13 @@ export class BeerFormComponent {
     this.apiRequestService.createBeer(beer, this.securityWord).subscribe({
       next: () => {
         this.errorMessage = '';
-        this.successMessage = 'Cerveza creada con éxito';
-        setTimeout(() => {
-          this.successMessage = '';
-        }, 3000);
+        this.openNotificationModal('Cerveza creada con éxito');
         this.beerUpdated.emit();
         console.log('Cerveza creada exitosamente');            
       },
-      error: (err) => {
-        console.log(this.formGroup.value)
+      error: (err) => {        
         console.error('Error al crear la cerveza:', err);
+        this.openNotificationModal(`Ocurrió el siguiente error : ${err.error.error}`);
       },
     });
   }  
@@ -102,22 +99,26 @@ export class BeerFormComponent {
     this.apiRequestService.editBeer(editedBeer, this.securityWord).subscribe({
       next: () => {
         this.errorMessage = '';
-        this.successMessage = 'Cerveza editada con éxito';
-        setTimeout(() => {
-          this.successMessage = '';
-        }, 3000);
+        this.openNotificationModal('Cerveza editada con éxito');
         this.beerUpdated.emit();
         console.log('Cerveza editada exitosamente');    
       },
       error: (err) => {
         console.error('Error al editar la cerveza:', err.error);
+        this.openNotificationModal(`Ocurrió el siguiente error : ${err.error.error}`);
       },
     });
   }
 
+  openNotificationModal(message: string): void {
+    this.modalMessage = message;
+    this.isNotification = true;    
+    this.isModalOpen = true;
+  }
+
   openEditModal(): void {
     this.modalMessage = `Esto editará el item : ${this.beerToEdit!.name}` ;
-    this.isModalOpen = true;;
+    this.isModalOpen = true;
   }
 
   onConfirm(confirmation: boolean): void {
@@ -126,6 +127,7 @@ export class BeerFormComponent {
     }
 
     this.isModalOpen = false;
+    this.isNotification = false;
   }
 
   getErrorMessage(): string {
