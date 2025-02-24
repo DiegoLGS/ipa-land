@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, effect, inject, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BeerType } from '../../enums/beer-type';
 import { Beer } from '../../classes/beer';
@@ -12,9 +12,10 @@ import { ModalComponent } from "../modal/modal.component";
   styleUrl: './beer-form.component.css'
 })
 export class BeerFormComponent {
-  @Input() beerToEdit: Beer | null = null;
-  @Input() securityWord: string = '';
-  @Output() beerUpdated = new EventEmitter<void>();
+  beerToEdit: InputSignal<Beer | null> = input.required<Beer | null>();
+  securityWord: InputSignal<string> = input<string>('');
+  beerUpdated: OutputEmitterRef<void> = output();
+  clearBeer: OutputEmitterRef<void> = output();
 
   apiRequestService: ApiRequestService = inject(ApiRequestService);
 
@@ -36,21 +37,23 @@ export class BeerFormComponent {
       image: ["", [Validators.required]],
       description: ["", []],
     })
-  }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if(changes['beerToEdit'] && this.beerToEdit) {
-      this.formGroup.patchValue({
-        name: this.beerToEdit.name,
-        type: this.beerToEdit.type,
-        alcohol: this.beerToEdit.alcohol,
-        ibu: this.beerToEdit.ibu,
-        image: this.beerToEdit.image,
-        description: this.beerToEdit.description,
-      });
-    } else {
-      this.formGroup.reset();
-    }
+    effect(() => {
+      const beer = this.beerToEdit!();
+
+      if (beer) {
+        this.formGroup.patchValue({
+          name: beer.name,
+          type: beer.type,
+          alcohol: beer.alcohol,
+          ibu: beer.ibu,
+          image: beer.image,
+          description: beer.description,
+        });
+      } else {
+        this.formGroup.reset();
+      }
+    })      
   }
 
   setTypeValue(type: string) {
@@ -72,7 +75,7 @@ export class BeerFormComponent {
 
     const beer: Beer = this.takeFormValues();
 
-    this.apiRequestService.createBeer(beer, this.securityWord).subscribe({
+    this.apiRequestService.createBeer(beer, this.securityWord()).subscribe({
       next: () => {
         this.errorMessage = '';
         this.openNotificationModal('Cerveza creada con éxito');
@@ -94,9 +97,9 @@ export class BeerFormComponent {
 
     const editedBeer: Beer = this.takeFormValues();        
 
-    editedBeer._id = this.beerToEdit!._id;
+    editedBeer._id = this.beerToEdit()!._id;
 
-    this.apiRequestService.editBeer(editedBeer, this.securityWord).subscribe({
+    this.apiRequestService.editBeer(editedBeer, this.securityWord()).subscribe({
       next: () => {
         this.errorMessage = '';
         this.openNotificationModal('Cerveza editada con éxito');
@@ -117,7 +120,7 @@ export class BeerFormComponent {
   }
 
   openEditModal(): void {
-    this.modalMessage = `Esto editará el item : ${this.beerToEdit!.name}` ;
+    this.modalMessage = `Esto editará el item : ${this.beerToEdit()!.name}` ;
     this.isModalOpen = true;
   }
 
@@ -170,6 +173,6 @@ export class BeerFormComponent {
 
   formReset(): void {
     this.formGroup.reset();    
-    this.beerToEdit = null;
+    this.clearBeer.emit();
   }
 }

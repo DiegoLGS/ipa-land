@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { Beer } from '../../classes/beer';
 import { ApiRequestService } from '../../services/api-request.service';
 import { ModalComponent } from "../modal/modal.component";
@@ -10,9 +10,8 @@ import { ModalComponent } from "../modal/modal.component";
   styleUrl: './beer-table.component.css'
 })
 export class BeerTableComponent {
-  @Output() beerToEdit = new EventEmitter<Beer | null>();
-  @Input() securityWord: string = '';
-  @Output() refreshBeers = new EventEmitter<void>();
+  beerToEdit = output<Beer | null>();
+  securityWord = input<string>('');
 
   apiRequestService: ApiRequestService = inject(ApiRequestService);
   beers: Beer[] = [];
@@ -36,7 +35,7 @@ export class BeerTableComponent {
 
   deleteBeer(): void {    
     if(this.beerToDelete && this.beerToDelete._id) {
-      this.apiRequestService.deleteBeer(this.beerToDelete._id, this.securityWord)
+      this.apiRequestService.deleteBeer(this.beerToDelete._id, this.securityWord())
       .subscribe({
         next: () => {
           this.getAllBeers();

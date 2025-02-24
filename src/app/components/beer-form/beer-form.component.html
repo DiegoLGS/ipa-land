@@ -1,5 +1,5 @@
 <div class="bg-white border rounded-lg px-8 py-6 mx-auto my-8 max-w-2xl">
-    @if(beerToEdit) {
+    @if(beerToEdit()) {
         <h2 class="text-2xl font-medium mb-4">Editar producto</h2>
         
     } @else {
@@ -7,14 +7,14 @@
         
     }
     
-    <form [formGroup]="formGroup" (ngSubmit)="beerToEdit ? openEditModal() : createBeer()" > 
+    <form [formGroup]="formGroup" (ngSubmit)="beerToEdit() ? openEditModal() : createBeer()" > 
 
         <div class="mb-4">
             <label for="name" class="block text-gray-700 font-medium mb-2">Nombre</label>
             <input type="text" id="name" name="name"
                 class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required
                 formControlName="name"
-                [value]="beerToEdit ? beerToEdit.name : ''"                
+                [value]="beerToEdit() ? beerToEdit()!.name : ''"                
             >
         </div>
 
@@ -25,7 +25,7 @@
                 #inputType
                 (change)="setTypeValue(inputType.value)"
                 required
-                [value]="beerToEdit ? beerToEdit.type : ''"
+                [value]="beerToEdit() ? beerToEdit()!.type : ''"
                 >
                 <option value="">Selecciona el tipo</option>
                 @for(type of beerTypes; track type) {
@@ -39,7 +39,7 @@
             <input type="text" id="alcohol" name="alcohol"
                 class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required
                 formControlName="alcohol"
-                [value]="beerToEdit ? beerToEdit.alcohol : ''"
+                [value]="beerToEdit() ? beerToEdit()!.alcohol : ''"
             >
         </div>
 
@@ -48,7 +48,7 @@
             <input type="text" id="ibu" name="ibu"
                 class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required
                 formControlName="ibu"
-                [value]="beerToEdit ? beerToEdit.ibu : ''"
+                [value]="beerToEdit() ? beerToEdit()!.ibu : ''"
             >
         </div>  
 
@@ -57,7 +57,7 @@
             <input type="text" id="image" name="image"
                 class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" required
                 formControlName="image"
-                [value]="beerToEdit ? beerToEdit.image : ''"
+                [value]="beerToEdit() ? beerToEdit()!.image : ''"
             >
         </div>  
 
@@ -66,7 +66,7 @@
             <textarea id="description" name="description"
                 class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400" rows="5"
                 formControlName="description"
-                [value]="beerToEdit ? beerToEdit.description : ''"
+                [value]="beerToEdit() ? beerToEdit()!.description : ''"
                 maxlength="145"
                 #inputDescription
                 ></textarea>
@@ -80,11 +80,11 @@
 
             <button type="submit" class="w-2/5 text-white px-4 py-2 ml-3 rounded-lg"
             [disabled]="!securityWord"
-            [class.bg-gray-500]="!securityWord"
-            [class.bg-blue-600]="securityWord"
-            [class.hover:bg-blue-500]="securityWord"
+            [class.bg-gray-500]="!securityWord()"
+            [class.bg-blue-600]="securityWord()"
+            [class.hover:bg-blue-500]="securityWord()"
             >
-            {{ beerToEdit ? 'Editar cerveza' : 'Crear cerveza' }}                
+            {{ beerToEdit() ? 'Editar cerveza' : 'Crear cerveza' }}                
             </button>
         </div>
 

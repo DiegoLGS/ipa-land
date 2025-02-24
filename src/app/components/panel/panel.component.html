@@ -6,6 +6,6 @@
 
     <app-beer-table (beerToEdit)="beerToEdit = $event" [securityWord]="this.securityWord" />        
     
-    <app-beer-form [beerToEdit]="beerToEdit" [securityWord]="this.securityWord" (beerUpdated)="onBeerUpdated()"></app-beer-form>
+    <app-beer-form [beerToEdit]="beerToEdit" (clearBeer)="clearBeer()" [securityWord]="this.securityWord" (beerUpdated)="onBeerUpdated()"></app-beer-form>
     
 </div>

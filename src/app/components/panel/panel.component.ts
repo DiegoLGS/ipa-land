@@ -22,8 +22,13 @@ export class PanelComponent {
   }
 
   onBeerUpdated() {
+    console.log("CERVEZA EDITADA O CREADA");
     if (this.beerTable) {
       this.beerTable.getAllBeers();
     }
+  }
+
+  clearBeer() {
+    this.beerToEdit = null;
   }
 }
