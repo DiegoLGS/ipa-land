@@ -21,7 +21,7 @@ export class BeerFormComponent {
 
   formGroup: FormGroup;
   fb: FormBuilder = inject(FormBuilder)
-  beerTypes = Object.values(BeerType);
+  beerTypes: BeerType[] = Object.values(BeerType);
   errorMessage: string = "";
 
   isModalOpen: boolean = false;

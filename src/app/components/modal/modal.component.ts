@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, Input, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
@@ -7,11 +7,11 @@ import { Component, input, output } from '@angular/core';
   styleUrl: './modal.component.css'
 })
 export class ModalComponent {
-  isOpen = input<boolean>(false);
-  message = input<string>('');
-  isNotification = input<boolean>(false);
+  isOpen: InputSignal<boolean> = input<boolean>(false);
+  message: InputSignal<string> = input<string>('');
+  isNotification: InputSignal<boolean> = input<boolean>(false);
 
-  confirm = output<boolean>();
+  confirm: OutputEmitterRef<boolean> = output<boolean>();
 
   confirmAction(confirmation: boolean) {
     this.confirm.emit(confirmation);        

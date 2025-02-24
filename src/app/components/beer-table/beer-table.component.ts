@@ -1,4 +1,4 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
 import { Beer } from '../../classes/beer';
 import { ApiRequestService } from '../../services/api-request.service';
 import { ModalComponent } from "../modal/modal.component";
@@ -10,8 +10,8 @@ import { ModalComponent } from "../modal/modal.component";
   styleUrl: './beer-table.component.css'
 })
 export class BeerTableComponent {
-  beerToEdit = output<Beer | null>();
-  securityWord = input<string>('');
+  beerToEdit: OutputEmitterRef<Beer | null> = output<Beer | null>();
+  securityWord: InputSignal<string> = input<string>('');
 
   apiRequestService: ApiRequestService = inject(ApiRequestService);
   beers: Beer[] = [];
