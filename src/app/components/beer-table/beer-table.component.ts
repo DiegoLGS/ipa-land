@@ -1,4 +1,4 @@
-import { Component, inject, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
 import { Beer } from '../../classes/beer';
 import { ApiRequestService } from '../../services/api-request.service';
 import { ModalComponent } from "../modal/modal.component";
@@ -7,7 +7,8 @@ import { ModalComponent } from "../modal/modal.component";
   selector: 'app-beer-table',
   imports: [ModalComponent],
   templateUrl: './beer-table.component.html',
-  styleUrl: './beer-table.component.css'
+  styleUrl: './beer-table.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BeerTableComponent {
   beerToEdit: OutputEmitterRef<Beer | null> = output<Beer | null>();

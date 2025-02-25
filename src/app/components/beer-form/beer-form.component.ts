@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BeerType } from '../../enums/beer-type';
 import { Beer } from '../../classes/beer';
@@ -9,7 +9,8 @@ import { ModalComponent } from "../modal/modal.component";
   selector: 'app-beer-form',
   imports: [ReactiveFormsModule, FormsModule, ModalComponent],
   templateUrl: './beer-form.component.html',
-  styleUrl: './beer-form.component.css'
+  styleUrl: './beer-form.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BeerFormComponent {
   beerToEdit: InputSignal<Beer | null> = input.required<Beer | null>();

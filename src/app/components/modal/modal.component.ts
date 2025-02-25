@@ -1,10 +1,11 @@
-import { Component, Input, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
   imports: [],
   templateUrl: './modal.component.html',
-  styleUrl: './modal.component.css'
+  styleUrl: './modal.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ModalComponent {
   isOpen: InputSignal<boolean> = input<boolean>(false);
